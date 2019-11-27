@@ -9,8 +9,8 @@ using Test
     @test typeof(df) == DataFrames.DataFrame
     @test in(:hrintsta, names(df))
 
-    prepdata(2019, ["HRINTSTA"], indexedtable=true, dir="test/data")
-    @test isfile("test/data/CPS 2019")
+    prepdata(2019, ["HRINTSTA"], indexedtable=true, dir="/home/travis/build/mthelm85/CurrentPopulationSurvey.jl/test/data")
+    @test isfile("/home/travis/build/mthelm85/CurrentPopulationSurvey.jl/test/data/CPS 2019")
 end
 
 rm("test/data/", recursive=true)
