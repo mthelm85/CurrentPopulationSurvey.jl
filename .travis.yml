@@ -16,5 +16,3 @@ notifications:
   email: false
 after_success:
   - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage; Codecov.submit(process_folder())'
-before_script:
-  - mkdir -p /home/travis/.julia/datadeps/test/data
