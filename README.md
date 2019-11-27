@@ -62,7 +62,7 @@ prepdata(2019, ["HRINTSTA", "PWORWGT"]; indexedtable=true, dir="C:/Users/user/Ju
 
 Download/parse CPS microdata files for a given year and retain *all* variables.
 
-# Arguments
+### Arguments
 - `year::Int`: the year for which you want to obtain CPS data. CPS data files are monthly
 so each year consists of 12 files.
 - `indexedtable::Bool=false`: specify whether or not you would like to save the parsed data
@@ -72,7 +72,7 @@ ongoing use. If false, will return a `DataFrame`.
 the `IndexedTable`. The file name will be generated automatically so you should not include
 it in the path.
 
-# Examples
+### Examples
 
 If you just want to return a DataFrame:
 
