@@ -178,7 +178,7 @@ function savetable(df::DataFrame, year::Int, dir::String = pwd())
         if isdir(dir)
             save(tbl, joinpath(dir, "CPS $year"))
         else
-            mkpath(dir)
+            mkdir(dir)
             save(tbl, joinpath(dir, "CPS $year"))
         end
         @info "Saved CPS $year IndexedTable to $dir/CPS $year"
