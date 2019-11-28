@@ -15,5 +15,5 @@ end
 
 df = Nothing
 tbl = Nothing
-rm(joinpath(pwd(), "test", "data"), recursive=true)
+# rm(joinpath(pwd(), "test", "data"), recursive=true)
 # rm(eval(@datadep_str "CPS 2019"), recursive=true)
