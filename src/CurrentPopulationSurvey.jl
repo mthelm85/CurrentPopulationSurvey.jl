@@ -91,7 +91,6 @@ function createdf(year::Int)
                 )
             end
         end
-        close(file)
         @info "Processed file $i of $numfiles"
         i += 1
     end

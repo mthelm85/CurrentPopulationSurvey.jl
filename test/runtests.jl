@@ -3,17 +3,21 @@ using DataDeps
 using DataFrames
 using Test
 
-df = prepdata(2019, ["HRINTSTA"])
-tbl = prepdata(2019, ["HRINTSTA"], indexedtable=true, dir=joinpath(pwd(), "test", "data"))
-
 @testset "CurrentPopulationSurvey.jl" begin
-    @test isdir(@datadep_str "CPS 2019")
-    @test typeof(df) == DataFrames.DataFrame
-    @test in(:hrintsta, names(df))
-    @test isfile(joinpath(pwd(), "test", "data", "CPS 2019"))
-end
+    @testset "method 1, indexedtable=false" begin
+        df = prepdata(2019, ["HRINTSTA"])
+        @test isdir(@datadep_str "CPS 2019")
+        @test typeof(df) == DataFrames.DataFrame
+        @test in(:hrintsta, names(df))
+    end
 
-# df = Nothing
-# tbl = Nothing
-# rm(joinpath(pwd(), "test", "data"), recursive=true)
-# rm(eval(@datadep_str "CPS 2019"), recursive=true)
+    @testset "method 2, indexedtable=false" begin
+        df_all = prepdata(2019)
+        @test in(:hrhhid, names(df_all))
+    end
+
+    @testset "method 1, indexedtable=true" begin
+        prepdata(2019, ["HRINTSTA"], indexedtable=true, dir=joinpath(pwd(), "test", "data"))
+        @test isfile(joinpath(pwd(), "test", "data", "CPS 2019"))
+    end
+end
