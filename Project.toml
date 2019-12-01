@@ -1,7 +1,7 @@
 name = "CurrentPopulationSurvey"
 uuid = "d0231af6-78e7-4e9e-9602-dcd107aeccbe"
 authors = ["Matt Helm"]
-version = "0.1.0"
+version = "0.2.0"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
@@ -12,9 +12,9 @@ JuliaDB = "a93385a2-3734-596a-9a66-3cfbb77141e6"
 
 [compat]
 julia = "1.2"
-CSV = "0.5.18"
-DataDeps = "0.7.1"
-DataFrames = "0.19.4"
+CSV = "0.5.0"
+DataDeps = "0.7.0"
+DataFrames = "0.19.0"
 Glob = "1.2.0"
 JuliaDB = "0.13.0"
 
