@@ -8,12 +8,12 @@ using Test
         df = prepdata(2019, ["HRINTSTA"])
         @test isdir(@datadep_str "CPS 2019")
         @test typeof(df) == DataFrames.DataFrame
-        @test in(:hrintsta, names(df))
+        @test in(:HRINTSTA, names(df))
     end
 
     @testset "method 2, indexedtable=false" begin
         df_all = prepdata(2019)
-        @test in(:hrhhid, names(df_all))
+        @test in(:HRHHID, names(df_all))
     end
 
     @testset "method 1, indexedtable=true" begin

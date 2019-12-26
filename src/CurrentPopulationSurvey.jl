@@ -52,7 +52,7 @@ function createdf(year::Int, vars::Vector{String})
         DataFrame(CSV.File(dictmap[year]))
     )
     for varname in varlist.varname
-        df[!, Symbol(varname)] = Int[]
+        df[!, Symbol(uppercase(varname))] = Int[]
     end
     files = collect(glob("*", @datadep_str "CPS $year"))
     numfiles = length(files)
@@ -77,7 +77,7 @@ function createdf(year::Int)
     df = DataFrame()
     varlist = DataFrame(CSV.File(dictmap[year]))
     for varname in varlist.varname
-        df[!, Symbol(varname)] = Int[]
+        df[!, Symbol(uppercase(varname))] = Int[]
     end
     files = collect(glob("*", @datadep_str "CPS $year"))
     numfiles = length(files)
