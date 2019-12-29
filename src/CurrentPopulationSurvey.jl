@@ -5,6 +5,7 @@ using DataFrames
 using DataDeps
 using Glob
 using JuliaDB
+using ProgressMeter
 
 export prepdata
 
@@ -19,6 +20,10 @@ const dictmap = Dict(
     2015 => project_path("data/data_dict201501.csv"),
     2014 => project_path("data/data_dict201401.csv"),
     2013 => project_path("data/data_dict201301.csv"),
+    201205 => project_path("data/data_dict201205.csv"),
+    201201 => project_path("data/data_dict201001.csv"),
+    2011 => project_path("data/data_dict201001.csv"),
+    2010 => project_path("data/data_dict201301.csv")
 )
 
 # Get the URLs of the .zip files for a given year
@@ -56,9 +61,7 @@ function createdf(year::Int, vars::Vector{String})
     end
     files = collect(glob("*", @datadep_str "CPS $year"))
     numfiles = length(files)
-    i = 1
-    @info "Processing $numfiles files..."
-    for file in files
+    @showprogress 1 "Processing $numfiles files..." for file in files
         open(file) do f
             for line in eachline(f)
                 push!(df,
@@ -66,8 +69,6 @@ function createdf(year::Int, vars::Vector{String})
                 )
             end
         end
-        @info "Processed file $i of $numfiles"
-        i += 1
     end
     return df
 end
@@ -81,9 +82,7 @@ function createdf(year::Int)
     end
     files = collect(glob("*", @datadep_str "CPS $year"))
     numfiles = length(files)
-    i = 1
-    @info "Processing $numfiles files..."
-    for file in files
+    @showprogress 1 "Processing $numfiles files..." for file in files
         open(file) do f
             for line in eachline(f)
                 push!(df,
@@ -91,8 +90,6 @@ function createdf(year::Int)
                 )
             end
         end
-        @info "Processed file $i of $numfiles"
-        i += 1
     end
     return df
 end

@@ -6,7 +6,7 @@
 
 # About
 
-CurrentPopulationSurvey.jl allows users to easily download & parse U.S. Census Bureau CPS microdata files for the 2013 - present time period (earlier years are coming in future releases).
+CurrentPopulationSurvey.jl allows users to easily download & parse U.S. Census Bureau CPS microdata files for the 2010 - present time period (earlier years are coming in future releases). Please see this [special note about 2012](#2012-data).
 
 # Resources
 
@@ -15,7 +15,7 @@ CurrentPopulationSurvey.jl allows users to easily download & parse U.S. Census B
 
 # Recommendations
 
-For the 2013 - present time period there are four different data dictionaries. I recommend that you familiarize yourself with the variables in the data dictionaries before calling ```prepdata``` so that you can decide on a subset of the total available variables for parsing. One year's worth of data is roughly 5GB - 7GB so narrowing this down (by selecting only the variables that you need) will improve efficiency when working with the data.
+For the 2010 - present time period there are six different data dictionaries. I recommend that you familiarize yourself with the variables in the data dictionaries before calling ```prepdata``` so that you can decide on a subset of the total available variables for parsing. One year's worth of data is roughly 5GB - 7GB so narrowing this down (by selecting only the variables that you need) will improve efficiency when working with the data.
 
 You have the option to parse the data and return a ```DataFrame``` or to save the parsed data as an ```IndexedTable```. I recommend that you save the data as an ```IndexedTable``` if you intend to use it on an ongoing basis. ```IndexedTables``` provide the backend to [JuliaDB](https://juliadb.org/) which is how I prefer to work with this data. The reason for this is that I find it's fast and also because JuliaDB makes it very easy to work with data that is too large to fit into memory. That being said, an ```IndexedTable``` can be fed directly into the [Queryverse](https://www.queryverse.org/) as well. What's particularly nice about this option is that you can then very easily save the data in a variety of different formats.
 
@@ -84,3 +84,7 @@ If you want to write the parsed data to an `IndexedTable`:
 ```
 prepdata(2019; indexedtable = true, dir = "C:/Users/user/Julia/cps-test/data")
 ```
+
+## 2012 Data
+
+There are two different data dictionaries for 2012. One covers the January - April period and the other covers the May - December period. Therefore, you must call `prepdata` twice for 2012 (assuming you want all twelve months' worth of data). Call `201201` as the year when calling `prepdata` to get the January - April period and `201205` to get the May - December period.  
