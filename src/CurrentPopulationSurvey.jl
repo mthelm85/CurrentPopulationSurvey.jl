@@ -7,7 +7,7 @@ using Glob
 using JuliaDB
 using ProgressMeter
 
-export prepdata
+export cpsdata
 
 project_path(parts...) = normpath(joinpath(@__DIR__, "..", parts...))
 
@@ -95,7 +95,7 @@ function createdf(year::Int)
 end
 
 """
-    prepdata(year::Int, vars::Vector{String}; indexedtable::Bool=false, dir::String=pwd())
+    cpsdata(year::Int, vars::Vector{String}; indexedtable::Bool=false, dir::String=pwd())
 
 Download/parse CPS microdata files for a given year retaining only the variables specified.
 There are hundreds of variables so specifying only those that you need will significantly increase
@@ -118,22 +118,22 @@ it in the path.
 If you just want to return a DataFrame:
 
 ```
-df19 = prepdata(2019, ["HRINTSTA", "PWORWGT"])
+df19 = cpsdata(2019, ["HRINTSTA", "PWORWGT"])
 ```
 
 If you want to write the parsed data to an `IndexedTable`:
 ```
-prepdata(2019, ["HRINTSTA", "PWORWGT"]; indexedtable=true, dir="C:/Users/user/Julia/cps-test/data")
+cpsdata(2019, ["HRINTSTA", "PWORWGT"]; indexedtable=true, dir="C:/Users/user/Julia/cps-test/data")
 ```
 """
-function prepdata(year::Int, vars::Vector{String}; indexedtable::Bool = false, dir::String = pwd())
+function cpsdata(year::Int, vars::Vector{String}; indexedtable::Bool = false, dir::String = pwd())
     registerdep(year)
     df = createdf(year, vars)
     return indexedtable ? savetable(df, year, dir) : df
 end
 
 """
-    prepdata(year::Int; indexedtable::Bool=false, dir::String=pwd())
+    cpsdata(year::Int; indexedtable::Bool=false, dir::String=pwd())
 
 Download/parse CPS microdata files for a given year and retain *all* variables.
 
@@ -152,15 +152,15 @@ it in the path.
 If you just want to return a DataFrame:
 
 ```
-df19 = prepdata(2019)
+df19 = cpsdata(2019)
 ```
 
 If you want to write the parsed data to an `IndexedTable`:
 ```
-prepdata(2019; indexedtable=true, dir="C:/Users/user/Julia/cps-test/data")
+cpsdata(2019; indexedtable=true, dir="C:/Users/user/Julia/cps-test/data")
 ```
 """
-function prepdata(year::Int; indexedtable::Bool = false, dir::String = pwd())
+function cpsdata(year::Int; indexedtable::Bool = false, dir::String = pwd())
     registerdep(year)
     df = createdf(year)
     return indexedtable ? savetable(df, year, dir) : df
