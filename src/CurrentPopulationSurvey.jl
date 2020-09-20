@@ -13,6 +13,7 @@ project_path(parts...) = normpath(joinpath(@__DIR__, "..", parts...))
 
 # Maps the correct data dictionary to each year's data files
 const dictmap = Dict(
+    2020 => project_path("data/data_dict201701.csv"),
     2019 => project_path("data/data_dict201701.csv"),
     2018 => project_path("data/data_dict201701.csv"),
     2017 => project_path("data/data_dict201701.csv"),
@@ -23,7 +24,10 @@ const dictmap = Dict(
     201205 => project_path("data/data_dict201205.csv"),
     201201 => project_path("data/data_dict201001.csv"),
     2011 => project_path("data/data_dict201001.csv"),
-    2010 => project_path("data/data_dict201301.csv")
+    2010 => project_path("data/data_dict201301.csv"),
+    2009 => project_path("data/data_dict200901.csv"),
+    2008 => project_path("data/data_dict200701.csv"),
+    2007 => project_path("data/data_dict200701.csv")
 )
 
 # Get the URLs of the .zip files for a given year

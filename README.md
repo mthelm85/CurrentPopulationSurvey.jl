@@ -6,7 +6,7 @@
 
 # About
 
-CurrentPopulationSurvey.jl allows users to easily download & parse U.S. Census Bureau CPS microdata files for the 2010 - present time period (earlier years are coming in future releases). Please see this [special note about 2012](#2012-data).
+CurrentPopulationSurvey.jl allows users to easily download & parse U.S. Census Bureau CPS microdata files for the 2007 - present time period (earlier years are coming in future releases). Please see this [special note about 2012](#2012-data).
 
 # Resources
 
