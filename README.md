@@ -23,7 +23,9 @@ This package supports the Tables.jl interface so you can easily convert to a tab
 
 This package exports a single function ```cpsdata```:
 
-    cpsdata(year::Int, month::Int, vars::Vector{String})
+```julia
+cpsdata(year::Int, month::Int, vars::Vector{String})
+```
 
 Download/parse CPS microdata files for a given year & month, optionally retaining only the variables specified.
 There are hundreds of variables so specifying only those that you need will significantly increase
@@ -37,13 +39,13 @@ would like to keep.
 
 ### Examples
 
-```
+```julia
 data1901 = cpsdata(2019, 1, ["HRINTSTA", "PWORWGT"])
 ```
 
 If you want to work with the data as a DataFrame:
 
-```
+```julia
 using DataFrames
 
 data1901 = DataFrame(cpsdata(2019, 1, ["HRINTSTA", "PWORWGT"]))
