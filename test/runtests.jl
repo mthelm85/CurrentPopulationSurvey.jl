@@ -1,23 +1,11 @@
 using CurrentPopulationSurvey
 using DataDeps
-using DataFrames
+using Tables
 using Test
 
 @testset "CurrentPopulationSurvey.jl" begin
-    @testset "method 1, indexedtable=false" begin
-        df = cpsdata(2019, ["HRINTSTA"])
-        @test isdir(@datadep_str "CPS 2019")
-        @test typeof(df) == DataFrames.DataFrame
-        @test in(:HRINTSTA, names(df))
-    end
-
-    @testset "method 2, indexedtable=false" begin
-        df_all = cpsdata(2019)
-        @test in(:HRHHID, names(df_all))
-    end
-
-    @testset "method 1, indexedtable=true" begin
-        cpsdata(2019, ["HRINTSTA"], indexedtable=true, dir=joinpath(pwd(), "test", "data"))
-        @test isfile(joinpath(pwd(), "test", "data", "CPS 2019"))
-    end
+    tbl = cpsdata(2019, 1, ["HRINTSTA"])
+    @test isdir(@datadep_str "CPS 20191")
+    @test Tables.istable(tbl) == true
+    @test in(:HRINTSTA, getfield(tbl, :names))
 end
