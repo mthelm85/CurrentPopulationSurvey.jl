@@ -42,8 +42,8 @@ function createtable(year::Int, month::Int, vars::Vector{String}, lookup::Abstra
     return Tables.table(permutedims(reshape(hcat(tbl...), (length(tbl[1]), length(tbl)))), header=Symbol.(vars))
 end
 
-function createtable(year::Int, month::Int, data::AbstractArray)
-    dictnum = data[(data[:,1] .== year) .& (data[:,2] .== month), 4][1] # Get the dict no. for a given year/month
+function createtable(year::Int, month::Int, lookup::AbstractArray)
+    dictnum = lookup[(lookup[:,1] .== year) .& (lookup[:,2] .== month), 4][1] # Get the dict no. for a given year/month
     dict = readdlm("data/data_dict$dictnum.csv", ',', skipstart=1) 
     tbl = AbstractArray{Int}[]
     path = @datadep_str "CPS $year$month"
@@ -55,7 +55,7 @@ function createtable(year::Int, month::Int, data::AbstractArray)
             )
         end
     end
-    return Tables.table(permutedims(reshape(hcat(tbl...), (length(tbl[1]), length(tbl)))), header=Symbol.(vars))
+    return Tables.table(permutedims(reshape(hcat(tbl...), (length(tbl[1]), length(tbl)))), header=Symbol.(dict[:,1]))
 end
 
 """
