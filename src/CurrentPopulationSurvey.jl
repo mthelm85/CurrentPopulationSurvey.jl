@@ -9,7 +9,7 @@ export cpsdata
 project_path(parts...) = normpath(joinpath(@__DIR__, "..", parts...))
 
 # Register a data dependency for a given year/month
-function registerdep(year::Int, month::Int, data::AbstractArray)
+function registerdep(year::Int, month::Int, lookup::AbstractArray)
     try
         isdir(@datadep_str "CPS $year$month")
         return @info "Unparsed CPS $year$month data is here: $(@datadep_str "CPS $year$month")"
@@ -17,7 +17,7 @@ function registerdep(year::Int, month::Int, data::AbstractArray)
         register(DataDep(
             "CPS $year$month",
             "CPS monthly microdata for $year$month",
-            data[(data[:,1] .== year) .& (data[:,2] .== month), 3][1], # Get the URL of the .zip files for a given year/month
+            lookup[(lookup[:,1] .== year) .& (lookup[:,2] .== month), 3][1], # Get the URL of the .zip files for a given year/month
             Any,
             post_fetch_method = unpack
         ))
@@ -25,9 +25,9 @@ function registerdep(year::Int, month::Int, data::AbstractArray)
 end
 
 # Parse the .dat files for a given year/month, optionally keeping only the variables specified in vars
-function createtable(year::Int, month::Int, vars::Vector{String}, data::AbstractArray)
-    dictnum = data[(data[:,1] .== year) .& (data[:,2] .== month), 4][1] # Get the dict no. for a given year/month
-    dict = readdlm(project_path("data/data_dict$dictnum.csv"), ',', skipstart=1) 
+function createtable(year::Int, month::Int, vars::Vector{String}, lookup::AbstractArray)
+    dictnum = lookup[(lookup[:,1] .== year) .& (lookup[:,2] .== month), 4][1] # Get the dict no. for a given year/month
+    dict = readdlm("data/data_dict$dictnum.csv", ',', skipstart=1) 
     varlist = dict[findall(in(lowercase.(vars)), dict[:, 1]), :]
     tbl = AbstractArray{Int}[]
     path = @datadep_str "CPS $year$month"
@@ -44,15 +44,14 @@ end
 
 function createtable(year::Int, month::Int, data::AbstractArray)
     dictnum = data[(data[:,1] .== year) .& (data[:,2] .== month), 4][1] # Get the dict no. for a given year/month
-    dict = readdlm(project_path("data/data_dict$dictnum.csv"), ',', skipstart=1) 
-    varlist = dict[:, 1]
+    dict = readdlm("data/data_dict$dictnum.csv", ',', skipstart=1) 
     tbl = AbstractArray{Int}[]
     path = @datadep_str "CPS $year$month"
     file = readdir(path, join=true)[1]
     open(file) do f
         for line in eachline(f)
             push!(tbl,
-                [parse(Int, line[row[2]:row[3]]) for row in eachrow(varlist)]
+                [parse(Int, line[row[2]:row[3]]) for row in eachrow(dict)]
             )
         end
     end
@@ -88,15 +87,15 @@ data1901 = DataFrame(cpsdata(2019, 1, ["HRINTSTA", "PWORWGT"]))
 ```
 """
 function cpsdata(year::Int, month::Int, vars::Vector{String})
-    data = readdlm(project_path("data/links_dicts.csv"), ',', skipstart=1)
-    registerdep(year, month, data)
-    return createtable(year, month, vars, data)
+    lookup = readdlm("data/links_dicts.csv", ',', skipstart=1)
+    registerdep(year, month, lookup)
+    return createtable(year, month, vars, lookup)
 end
 
 function cpsdata(year::Int, month::Int)
-    data = readdlm(project_path("data/links_dicts.csv"), ',', skipstart=1)
-    registerdep(year, month, data)
-    return createtable(year, month, data)
+    lookup = readdlm("data/links_dicts.csv", ',', skipstart=1)
+    registerdep(year, month, lookup)
+    return createtable(year, month, lookup)
 end
 
 end
