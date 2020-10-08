@@ -28,7 +28,24 @@ end
 function createtable(year::Int, month::Int, vars::Vector{String}, data::AbstractArray)
     dictnum = data[(data[:,1] .== year) .& (data[:,2] .== month), 4][1] # Get the dict no. for a given year/month
     dict = readdlm(project_path("data/data_dict$dictnum.csv"), ',', skipstart=1) 
-    varlist = ismissing(vars) ? dict[:, 1] : dict[findall(in(lowercase.(vars)), dict[:, 1]), :]
+    varlist = dict[findall(in(lowercase.(vars)), dict[:, 1]), :]
+    tbl = AbstractArray{Int}[]
+    path = @datadep_str "CPS $year$month"
+    file = readdir(path, join=true)[1]
+    open(file) do f
+        for line in eachline(f)
+            push!(tbl,
+                [parse(Int, line[row[2]:row[3]]) for row in eachrow(varlist)]
+            )
+        end
+    end
+    return Tables.table(permutedims(reshape(hcat(tbl...), (length(tbl[1]), length(tbl)))), header=Symbol.(vars))
+end
+
+function createtable(year::Int, month::Int, data::AbstractArray)
+    dictnum = data[(data[:,1] .== year) .& (data[:,2] .== month), 4][1] # Get the dict no. for a given year/month
+    dict = readdlm(project_path("data/data_dict$dictnum.csv"), ',', skipstart=1) 
+    varlist = dict[:, 1]
     tbl = AbstractArray{Int}[]
     path = @datadep_str "CPS $year$month"
     file = readdir(path, join=true)[1]
@@ -43,7 +60,7 @@ function createtable(year::Int, month::Int, vars::Vector{String}, data::Abstract
 end
 
 """
-    cpsdata(year::Int, month::Int, [vars::Vector{String}])
+    cpsdata(year::Int, month::Int[, vars::Vector{String}])
 
 Download/parse CPS microdata files for a given year & month, optionally retaining only the variables specified.
 There are hundreds of variables so specifying only those that you need will significantly increase
@@ -70,10 +87,16 @@ using DataFrames
 data1901 = DataFrame(cpsdata(2019, 1, ["HRINTSTA", "PWORWGT"]))
 ```
 """
-function cpsdata(year::Int, month::Int, vars::Vector{String}=missing)
+function cpsdata(year::Int, month::Int, vars::Vector{String})
     data = readdlm(project_path("data/links_dicts.csv"), ',', skipstart=1)
     registerdep(year, month, data)
     return createtable(year, month, vars, data)
+end
+
+function cpsdata(year::Int, month::Int)
+    data = readdlm(project_path("data/links_dicts.csv"), ',', skipstart=1)
+    registerdep(year, month, data)
+    return createtable(year, month, data)
 end
 
 end
