@@ -9,5 +9,5 @@ using Test
     @test Tables.istable(tbl) == true
     @test in(:HRINTSTA, getfield(tbl, :names))
     tbl_all = cpsdata(2019,1)
-    @test in(:pworwgt, getfield(tbl, :names))
+    @test in(:pworwgt, getfield(tbl_all, :names))
 end
