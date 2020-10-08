@@ -28,7 +28,7 @@ end
 # Parse the .dat files for a given year/month, optionally keeping only the variables specified in vars
 function createtable(year::Int, month::Int, vars::Vector{String}, data::AbstractArray)
     dictnum = data[(data[:,1] .== year) .& (data[:,2] .== month), 4][1] # Get the dict no. for a given year/month
-    dict = readdlm("data/data_dict$dictnum.csv", ',', skipstart=1) 
+    dict = readdlm(project_path("data/data_dict$dictnum.csv"), ',', skipstart=1) 
     varlist = ismissing(vars) ? dict[:, 1] : dict[findall(in(lowercase.(vars)), dict[:, 1]), :]
     tbl = AbstractArray{Int}[]
     path = @datadep_str "CPS $year$month"
@@ -72,7 +72,7 @@ data1901 = DataFrame(cpsdata(2019, 1, ["HRINTSTA", "PWORWGT"]))
 ```
 """
 function cpsdata(year::Int, month::Int, vars::Vector{String}=missing)
-    data = readdlm("data/links_dicts.csv", ',', skipstart=1)
+    data = readdlm(project_path("data/links_dicts.csv"), ',', skipstart=1)
     registerdep(year, month, data)
     return createtable(year, month, vars, data)
 end
