@@ -2,7 +2,6 @@ module CurrentPopulationSurvey
 
 using DataDeps
 using DelimitedFiles
-using Glob
 using Tables
 
 export cpsdata

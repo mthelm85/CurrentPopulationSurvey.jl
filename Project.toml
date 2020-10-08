@@ -1,17 +1,15 @@
 name = "CurrentPopulationSurvey"
 uuid = "d0231af6-78e7-4e9e-9602-dcd107aeccbe"
 authors = ["Matt Helm"]
-version = "1.1.0"
+version = "1.1.1"
 
 [deps]
 DataDeps = "124859b0-ceae-595e-8997-d05f6a7a8dfe"
 DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
-Glob = "c27321d9-0574-5035-807b-f59d2c89b15c"
 Tables = "bd369af6-aec1-5ad0-b16a-f7cc5008161c"
 
 [compat]
 DataDeps = "0.7.0"
-Glob = "1.0.0"
 Tables = "1.0"
 julia = "1.0"
 
