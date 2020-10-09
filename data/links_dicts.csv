@@ -11,7 +11,7 @@ year,month,url,data_dict
 2020,3,https://www2.census.gov/programs-surveys/cps/datasets/2020/basic/mar20pub.zip,202001
 2020,2,https://www2.census.gov/programs-surveys/cps/datasets/2020/basic/feb20pub.zip,202001
 2020,1,https://www2.census.gov/programs-surveys/cps/datasets/2020/basic/jan20pub.zip,202001
-2019,12,https://www2.census.gov/programs-surveys/cps/datasets/2020/basic/dec19pub.zip,201701
+2019,12,https://www2.census.gov/programs-surveys/cps/datasets/2019/basic/dec19pub.zip,201701
 2019,11,https://www2.census.gov/programs-surveys/cps/datasets/2019/basic/nov19pub.zip,201701
 2019,10,https://www2.census.gov/programs-surveys/cps/datasets/2019/basic/oct19pub.zip,201701
 2019,9,https://www2.census.gov/programs-surveys/cps/datasets/2019/basic/sep19pub.zip,201701
