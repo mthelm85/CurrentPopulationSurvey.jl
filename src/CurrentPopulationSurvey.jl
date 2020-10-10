@@ -27,7 +27,7 @@ end
 # Parse the .dat files for a given year/month, optionally keeping only the variables specified in vars
 function createtable(year::Int, month::Int, vars::Vector{String}, lookup::AbstractArray)
     dictnum = lookup[(lookup[:,1] .== year) .& (lookup[:,2] .== month), 4][1] # Get the dict no. for a given year/month
-    dict = readdlm(project_path("data/data_dict$dictnum.csv"), ',', skipstart=1) 
+    dict = readdlm("data/data_dict$dictnum.csv", ',', skipstart=1) # NEED TO SORT VARNAMES 
     varlist = dict[findall(in(lowercase.(vars)), dict[:, 1]), :]
     tbl = AbstractArray{Int}[]
     path = @datadep_str "CPS $year$month"
@@ -39,12 +39,12 @@ function createtable(year::Int, month::Int, vars::Vector{String}, lookup::Abstra
             )
         end
     end
-    return Tables.table(permutedims(reshape(hcat(tbl...), (length(tbl[1]), length(tbl)))), header=Symbol.(vars))
+    return Tables.table(permutedims(reshape(hcat(tbl...), (length(tbl[1]), length(tbl)))), header=Symbol.(varlist[:, 1]))
 end
 
 function createtable(year::Int, month::Int, lookup::AbstractArray)
     dictnum = lookup[(lookup[:,1] .== year) .& (lookup[:,2] .== month), 4][1] # Get the dict no. for a given year/month
-    dict = readdlm(project_path("data/data_dict$dictnum.csv"), ',', skipstart=1) 
+    dict = readdlm("data/data_dict$dictnum.csv", ',', skipstart=1) 
     tbl = AbstractArray{Int}[]
     path = @datadep_str "CPS $year$month"
     file = readdir(path, join=true)[1]
@@ -87,13 +87,13 @@ data1901 = DataFrame(cpsdata(2019, 1, ["HRINTSTA", "PWORWGT"]))
 ```
 """
 function cpsdata(year::Int, month::Int, vars::Vector{String})
-    lookup = readdlm(project_path("data/links_dicts.csv"), ',', skipstart=1)
+    lookup = readdlm("data/links_dicts.csv", ',', skipstart=1)
     registerdep(year, month, lookup)
     return createtable(year, month, vars, lookup)
 end
 
 function cpsdata(year::Int, month::Int)
-    lookup = readdlm(project_path("data/links_dicts.csv"), ',', skipstart=1)
+    lookup = readdlm("data/links_dicts.csv", ',', skipstart=1)
     registerdep(year, month, lookup)
     return createtable(year, month, lookup)
 end
