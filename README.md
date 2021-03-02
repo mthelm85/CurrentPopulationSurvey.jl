@@ -33,7 +33,7 @@ efficiency when working with the data.
 
 ### Arguments
 - `year::Int`: the year for which you want to obtain CPS data.
-- `year::Int`: the month for which you want to obtain CPS data.
+- `month::Int`: the month for which you want to obtain CPS data.
 - `vars::Vector{String}`: an optional argument specifying the variables in the microdata file that you
 would like to keep.
 
