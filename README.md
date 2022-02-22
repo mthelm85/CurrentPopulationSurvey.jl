@@ -6,7 +6,7 @@
 
 # About
 
-CurrentPopulationSurvey.jl allows users to easily download & parse U.S. Census Bureau CPS microdata files for the 2007 - present time period (earlier years are coming in future releases).
+CurrentPopulationSurvey.jl allows users to easily download & parse U.S. Census Bureau CPS microdata files for the 2007 - present time period (earlier years are coming in future releases). This package supports the Tables.jl interface so you can easily convert to a tabular structure of your preference (e.g. `DataFrame`).
 
 # Resources
 
@@ -15,9 +15,7 @@ CurrentPopulationSurvey.jl allows users to easily download & parse U.S. Census B
 
 # Recommendations
 
-I recommend that you familiarize yourself with the variables in the data dictionaries before calling ```cpsdata``` so that you can decide on a subset of the total available variables for parsing. One year's worth of data is roughly 5GB - 7GB so narrowing this down (by selecting only the variables that you need) will improve efficiency when working with the data.
-
-This package supports the Tables.jl interface so you can easily convert to a tabular structure of your preference (e.g. `DataFrame`). If you are going to be working with many years of data, I recommend that you make use of [JuliaDB](https://juliadb.org/) and save the data as an ```IndexedTable``` if you intend to use it on an ongoing basis. The reason for this is that I find it's fast and also because JuliaDB makes it very easy to work with data that is too large to fit into memory.
+I recommend that you familiarize yourself with the variables in the data dictionaries before calling ```cpsdata``` so that you can decide on a subset of the total available variables for parsing. One year's worth of data is roughly 5GB - 7GB so narrowing this down (by selecting only the variables that you need) will improve efficiency when working with the data. 
 
 # Useage
 
