@@ -1,12 +1,11 @@
 # CurrentPopulationSurvey
 
-[![Build Status](https://travis-ci.com/mthelm85/CurrentPopulationSurvey.jl.svg?branch=master)](https://travis-ci.com/mthelm85/CurrentPopulationSurvey.jl)
-[![Build Status](https://ci.appveyor.com/api/projects/status/github/mthelm85/CurrentPopulationSurvey.jl?svg=true)](https://ci.appveyor.com/project/mthelm85/CurrentPopulationSurvey-jl)
+[![CI](https://github.com/mthelm85/CurrentPopulationSurvey.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/mthelm85/CurrentPopulationSurvey.jl/actions/workflows/CI.yml)
 [![Codecov](https://codecov.io/gh/mthelm85/CurrentPopulationSurvey.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/mthelm85/CurrentPopulationSurvey.jl)
 
 # About
 
-CurrentPopulationSurvey.jl allows users to easily download & parse U.S. Census Bureau CPS microdata files for the 2007 - present time period (earlier years are coming in future releases). This package supports the Tables.jl interface so you can easily convert to a tabular structure of your preference (e.g. `DataFrame`).
+CurrentPopulationSurvey.jl allows users to easily download & parse U.S. Census Bureau CPS microdata files for the 2007–present time period. Monthly `.zip` files (~10MB each) are downloaded from Census Bureau servers and cached locally. This package supports the Tables.jl interface so you can easily convert to a tabular structure of your preference (e.g. `DataFrame`).
 
 # Resources
 
@@ -17,7 +16,7 @@ CurrentPopulationSurvey.jl allows users to easily download & parse U.S. Census B
 
 I recommend that you familiarize yourself with the variables in the data dictionaries before calling ```cpsdata``` so that you can decide on a subset of the total available variables for parsing. One year's worth of data is roughly 5GB - 7GB so narrowing this down (by selecting only the variables that you need) will improve efficiency when working with the data. 
 
-# Useage
+# Usage
 
 This package exports a single function ```cpsdata```:
 
